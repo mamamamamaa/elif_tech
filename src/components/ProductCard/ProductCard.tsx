@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useAppSelector } from "../../redux/hooks.ts";
 import { selectCart } from "../../redux/selectors.ts";
+import noImage from "../../../public/no_image.gif";
 
 interface Props {
   name: string;
@@ -21,7 +22,7 @@ export const ProductCard: FC<Props> = ({
 
   return (
     <article className="flex flex-col justify-between bg-white rounded-lg shadow p-4 h-full">
-      <img src={image} alt="Product" className="w-full" />
+      <img src={image || noImage} alt="Product" className="w-full" />
       <div>
         <h3 className="text-lg font-bold mt-2">{name}</h3>
         <button
@@ -33,6 +34,7 @@ export const ProductCard: FC<Props> = ({
           Order
         </button>
       </div>
+      <button type="button"></button>
     </article>
   );
 };
