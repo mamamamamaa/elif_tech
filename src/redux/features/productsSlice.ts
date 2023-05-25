@@ -9,12 +9,31 @@ const initialState: IState = {
   stores: [],
   cart: [],
   activeStoreProducts: null,
+  userOrderData: { name: "", address: "", email: "", phone: "" },
 };
 
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    setInCart(
+      state,
+      action: PayloadAction<{ store: string; product: string }>
+    ) {
+      const { store, product } = action.payload;
+
+      const searchedStore = state.stores.find(({ _id }) => _id === store);
+      const searchedProduct = searchedStore?.products?.find(
+        ({ _id }) => _id === product
+      );
+
+      if (searchedProduct) {
+        state.cart.push(searchedProduct);
+      } else {
+        state.error = "Product not found";
+      }
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(getStores.pending, (state) => {
@@ -63,6 +82,6 @@ export const productsSlice = createSlice({
       }),
 });
 
-export const {} = productsSlice.actions;
+export const { setInCart } = productsSlice.actions;
 
 export default productsSlice.reducer;
