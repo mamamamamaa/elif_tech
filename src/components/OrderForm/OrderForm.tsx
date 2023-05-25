@@ -1,11 +1,16 @@
 import { FC, Fragment } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IOrderData } from "../../types/store.intarface.ts";
-import { useAppSelector } from "../../redux/hooks.ts";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 import { selectOrderData, selectTotalPrice } from "../../redux/selectors.ts";
 import { IFormInputs } from "../../types/form.interface.ts";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import {
+  checkTotalPrice,
+  setUserOrderData,
+} from "../../redux/features/productsSlice.ts";
+import { makeOrder } from "../../redux/operations/products.ts";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -25,8 +30,10 @@ export const OrderForm: FC = () => {
   } = useForm<IOrderData>({
     resolver: yupResolver(validationSchema),
   });
-  const { email, phone, address, name } = useAppSelector(selectOrderData);
+  const dispatch = useAppDispatch();
+
   const totalPrice = useAppSelector(selectTotalPrice);
+  const { email, phone, address, name } = useAppSelector(selectOrderData);
 
   const formInputs: IFormInputs[] = [
     {
@@ -55,7 +62,11 @@ export const OrderForm: FC = () => {
     },
   ];
 
-  const onSubmit: SubmitHandler<IOrderData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IOrderData> = (data) => {
+    dispatch(setUserOrderData(data));
+    dispatch(checkTotalPrice());
+    dispatch(makeOrder(""));
+  };
 
   return (
     <>

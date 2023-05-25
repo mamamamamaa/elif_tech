@@ -15,7 +15,7 @@ import productReducer from "./features/productsSlice.ts";
 const authPersistConfig = {
   key: "products",
   storage,
-  whitelist: ["cart", "userOrderData"],
+  whitelist: ["cart", "userOrderData", "totalPrice"],
 };
 
 const pepersistedReducer = persistReducer(authPersistConfig, productReducer);

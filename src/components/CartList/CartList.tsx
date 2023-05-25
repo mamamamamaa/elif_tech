@@ -23,6 +23,11 @@ export const CartList: FC = () => {
           ))}
         </ul>
       )}
+      {cart.length === 0 && (
+        <p className="text-center">
+          You have not added any items to your cart yet
+        </p>
+      )}
     </>
   );
 };

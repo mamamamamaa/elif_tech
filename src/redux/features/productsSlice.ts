@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct, IState } from "../../types/store.intarface";
-import { getStoreProducts, getStores } from "../operations/products";
+import { IOrderData, IProduct, IState } from "../../types/store.intarface";
+import { getStoreProducts, getStores, makeOrder } from "../operations/products";
 import { IStoreResponse } from "../../types/fetch.interface";
 
 const initialState: IState = {
@@ -65,10 +65,20 @@ export const productsSlice = createSlice({
 
       state.cart = state.cart.map((prod) => {
         if (prod._id === id) {
+          state.totalPrice += (totalQuantity - prod.takenQuantity) * prod.price;
           prod.takenQuantity = totalQuantity;
         }
         return prod;
       });
+    },
+    checkTotalPrice(state) {
+      state.totalPrice = state.cart.reduce(
+        (acc, { price, takenQuantity }) => takenQuantity * price + acc,
+        0
+      );
+    },
+    setUserOrderData(state, action: PayloadAction<IOrderData>) {
+      state.userOrderData = action.payload;
     },
   },
   extraReducers: (builder) =>
@@ -116,10 +126,28 @@ export const productsSlice = createSlice({
       .addCase(getStoreProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(makeOrder.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(makeOrder.fulfilled, (state) => {
+        state.totalPrice = 0;
+        state.cart = [];
+        state.isLoading = false;
+      })
+      .addCase(makeOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       }),
 });
 
-export const { setInCart, removeFromCart, updateQuantity } =
-  productsSlice.actions;
+export const {
+  setInCart,
+  setUserOrderData,
+  removeFromCart,
+  updateQuantity,
+  checkTotalPrice,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;
