@@ -2,6 +2,22 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/elif_tech_logo.jpg";
 import style from "./Header.module.css";
+
+const navLinks = [
+  {
+    pageName: "Shops",
+    linkTo: "/store",
+  },
+  {
+    pageName: "Cart",
+    linkTo: "/cart",
+  },
+  {
+    pageName: "History",
+    linkTo: "/history",
+  },
+];
+
 export const Header = () => {
   return (
     <header className={style.header}>
@@ -11,15 +27,11 @@ export const Header = () => {
           <span className={style.logoText}>ElifTech Delivery</span>
         </Link>
         <nav className={style.navigation}>
-          <Link href="/store" className={style.navigationLink}>
-            Shop
-          </Link>
-          <Link href="/cart" className={style.navigationLink}>
-            Shopping Cart
-          </Link>
-          <Link href="/history" className={style.navigationLink}>
-            Shopping History
-          </Link>
+          {navLinks.map(({ linkTo, pageName }) => (
+            <Link href={linkTo} key={pageName} className={style.navigationLink}>
+              {pageName}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>
