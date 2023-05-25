@@ -18,9 +18,11 @@ const authPersistConfig = {
   whitelist: ["cart"],
 };
 
+const pepersistedReducer = persistReducer(authPersistConfig, productReducer);
+
 export const store = configureStore({
   reducer: {
-    products: persistReducer(authPersistConfig, productReducer),
+    products: pepersistedReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

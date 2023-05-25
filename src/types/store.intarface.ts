@@ -16,6 +16,6 @@ export interface IStore extends IStoreResponse {
 export interface IState {
   error: string | null | undefined;
   isLoading: boolean;
-  store: IStore[];
+  stores: IStore[];
   cart: IProduct[];
 }

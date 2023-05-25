@@ -6,7 +6,7 @@ import { IStoreResponse } from "../../types/fetch.interface";
 const initialState: IState = {
   error: null,
   isLoading: false,
-  store: [],
+  stores: [],
   cart: [],
 };
 
@@ -24,7 +24,7 @@ export const productsSlice = createSlice({
         getStores.fulfilled,
         (state, action: PayloadAction<IStoreResponse[]>) => {
           state.isLoading = false;
-          state.store = action.payload;
+          state.stores = action.payload;
         }
       )
       .addCase(getStores.rejected, (state, action) => {
