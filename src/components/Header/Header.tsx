@@ -1,25 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/elif_tech_logo.jpg";
+import style from "./Header.module.css";
 export const Header = () => {
   return (
-    <header className="bg-gray-900 text-white py-4">
-      <div className="container mx-auto flex items-center justify-between px-4">
-        <div className="flex items-center">
-          <Image className="w-8 h-8 mr-2" src={logo} alt="ElifTech Logo" />
-          <span className="text-lg font-semibold">ElifTech Delivery</span>
-        </div>
-        <div className="flex items-center">
-          <Link href="/shop" className="text-white hover:text-gray-300 mx-2">
+    <header className={style.header}>
+      <div className={style.headerContainer}>
+        <Link href="/" className={style.logoBox}>
+          <Image className={style.logoImg} src={logo} alt="ElifTech Logo" />
+          <span className={style.logoText}>ElifTech Delivery</span>
+        </Link>
+        <nav className={style.navigation}>
+          <Link href="/shop" className={style.navigationLink}>
             Shot
           </Link>
-          <Link
-            href="/shop-cart"
-            className="text-white hover:text-gray-300 mx-2"
-          >
+          <Link href="/shop-cart" className={style.navigationLink}>
             Shop Cart
           </Link>
-        </div>
+        </nav>
       </div>
     </header>
   );
