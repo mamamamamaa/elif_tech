@@ -1,7 +1,11 @@
 import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IStoreResponse } from "../../types/fetch.interface";
-import { IProduct } from "../../types/store.intarface.ts";
+import {
+  IOrderHistory,
+  IOrderHistoryData,
+  IProduct,
+} from "../../types/store.intarface.ts";
 import { RootState } from "../store.ts";
 
 const { VITE_SERVER } = import.meta.env;
@@ -75,3 +79,21 @@ export const makeOrder = createAsyncThunk<any, any, { rejectValue: string }>(
     }
   }
 );
+
+export const getOrderHistory = createAsyncThunk<
+  IOrderHistory[],
+  IOrderHistoryData,
+  { rejectValue: string }
+>("products/get-order", async (reqData, thunkApi) => {
+  try {
+    const { data } = await axios.post("/api/order/get", reqData);
+
+    return data;
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      return thunkApi.rejectWithValue(err.message);
+    }
+
+    return err;
+  }
+});

@@ -21,6 +21,11 @@ export interface IOrderData {
   address: string;
 }
 
+export interface IOrderHistoryData {
+  email: string;
+  phone: string;
+}
+
 export interface IOrderHistory {
   _id: string;
   name: string;

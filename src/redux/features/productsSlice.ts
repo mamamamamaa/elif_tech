@@ -1,6 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IOrderData, IProduct, IState } from "../../types/store.intarface";
-import { getStoreProducts, getStores, makeOrder } from "../operations/products";
+import {
+  IOrderData,
+  IOrderHistory,
+  IProduct,
+  IState,
+} from "../../types/store.intarface";
+import {
+  getOrderHistory,
+  getStoreProducts,
+  getStores,
+  makeOrder,
+} from "../operations/products";
 import { IStoreResponse } from "../../types/fetch.interface";
 
 const initialState: IState = {
@@ -11,6 +21,7 @@ const initialState: IState = {
   activeStoreProducts: null,
   userOrderData: { name: "", address: "", email: "", phone: "" },
   totalPrice: 0,
+  orderHistory: [],
 };
 
 export const productsSlice = createSlice({
@@ -137,6 +148,21 @@ export const productsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(makeOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getOrderHistory.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        getOrderHistory.fulfilled,
+        (state, action: PayloadAction<IOrderHistory[]>) => {
+          state.isLoading = false;
+          state.orderHistory = action.payload;
+        }
+      )
+      .addCase(getOrderHistory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       }),

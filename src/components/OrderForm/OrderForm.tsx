@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IOrderData } from "../../types/store.intarface.ts";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 import { selectOrderData, selectTotalPrice } from "../../redux/selectors.ts";
-import { IFormInputs } from "../../types/form.interface.ts";
+import { IOrderFormInputs } from "../../types/form.interface.ts";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
@@ -35,7 +35,7 @@ export const OrderForm: FC = () => {
   const totalPrice = useAppSelector(selectTotalPrice);
   const { email, phone, address, name } = useAppSelector(selectOrderData);
 
-  const formInputs: IFormInputs[] = [
+  const formInputs: IOrderFormInputs[] = [
     {
       label: "Name",
       name: "name",
