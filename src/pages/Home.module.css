@@ -1,0 +1,15 @@
+.pageContainer {
+    @apply flex flex-col items-center justify-center h-screen;
+}
+
+.welcomeHeader {
+    @apply text-4xl font-bold text-center mb-4;
+}
+
+.paragraph {
+    @apply text-lg text-center mb-8;
+}
+
+.orderLink {
+    @apply bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded;
+}
