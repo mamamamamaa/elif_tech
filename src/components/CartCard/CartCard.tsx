@@ -3,6 +3,7 @@ import noImage from "../../../public/no_image.gif";
 import { QuantityCounter } from "../QuantityCounter/QuantityCounter.tsx";
 import { RxCross2 } from "react-icons/rx";
 import { useAppDispatch } from "../../redux/hooks.ts";
+import { removeFromCart } from "../../redux/features/productsSlice.ts";
 
 interface Props {
   id: string;
@@ -15,7 +16,7 @@ interface Props {
 export const CartCard: FC<Props> = ({ price, image, quantity, name, id }) => {
   const dispatch = useAppDispatch();
 
-  const handleRemoveFormCart = () => dispatch();
+  const handleRemoveFormCart = () => dispatch(removeFromCart(id));
 
   return (
     <article className=" flex flex-row bg-white rounded-lg shadow p-4 relative">
@@ -25,7 +26,11 @@ export const CartCard: FC<Props> = ({ price, image, quantity, name, id }) => {
         <p>Price: {price}</p>
         <QuantityCounter quantity={quantity} />
       </div>
-      <button type="button" className="absolute top-3 right-3">
+      <button
+        type="button"
+        onClick={handleRemoveFormCart}
+        className="absolute top-3 right-3"
+      >
         <RxCross2 />
       </button>
     </article>

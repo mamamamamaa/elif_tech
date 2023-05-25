@@ -38,6 +38,10 @@ export const productsSlice = createSlice({
         state.error = "Product not found";
       }
     },
+
+    removeFromCart(state, action: PayloadAction<string>) {
+      state.cart = state.cart.filter(({ _id }) => _id !== action.payload);
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -87,6 +91,6 @@ export const productsSlice = createSlice({
       }),
 });
 
-export const { setInCart } = productsSlice.actions;
+export const { setInCart, removeFromCart } = productsSlice.actions;
 
 export default productsSlice.reducer;
