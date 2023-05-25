@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IOrderData } from "../../types/store.intarface.ts";
 import { useAppSelector } from "../../redux/hooks.ts";
-import { selectOrderData } from "../../redux/selectors.ts";
+import { selectOrderData, selectTotalPrice } from "../../redux/selectors.ts";
 import { IFormInputs } from "../../types/form.interface.ts";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -26,6 +26,7 @@ export const OrderForm: FC = () => {
     resolver: yupResolver(validationSchema),
   });
   const { email, phone, address, name } = useAppSelector(selectOrderData);
+  const totalPrice = useAppSelector(selectTotalPrice);
 
   const formInputs: IFormInputs[] = [
     {
@@ -81,7 +82,7 @@ export const OrderForm: FC = () => {
           <button className="w-1/2 rounded py-1 px-2 bg-blue-600 text-white text-sm border border-blue-600 hover:text-blue-600 hover:bg-transparent disabled:bg-transparent disabled:text-blue-600">
             Submit
           </button>
-          <span> TOTAL PRICE: 0</span>
+          <span> TOTAL PRICE: {totalPrice}</span>
         </div>
       </form>
     </>

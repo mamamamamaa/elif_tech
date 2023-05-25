@@ -10,6 +10,7 @@ const initialState: IState = {
   cart: [],
   activeStoreProducts: null,
   userOrderData: { name: "", address: "", email: "", phone: "" },
+  totalPrice: 0,
 };
 
 export const productsSlice = createSlice({
@@ -28,7 +29,13 @@ export const productsSlice = createSlice({
       );
 
       if (searchedProduct) {
-        if (searchedProduct.store === state.cart[0].store) {
+        if (
+          !state.cart[0]?.store ||
+          searchedProduct.store === state.cart[0].store
+        ) {
+          searchedProduct.takenQuantity = 1;
+          state.totalPrice +=
+            searchedProduct.takenQuantity * searchedProduct.price;
           state.cart.push(searchedProduct);
         } else {
           state.error =
@@ -40,7 +47,14 @@ export const productsSlice = createSlice({
     },
 
     removeFromCart(state, action: PayloadAction<string>) {
-      state.cart = state.cart.filter(({ _id }) => _id !== action.payload);
+      state.cart = state.cart.filter(({ _id, takenQuantity, price }) => {
+        if (_id === action.payload) {
+          state.totalPrice -= takenQuantity * price;
+          return false;
+        }
+
+        return true;
+      });
     },
 
     updateQuantity(

@@ -7,7 +7,7 @@ export interface IProduct {
   quantity: number;
   image: string;
   store: string;
-  takenQuantity?: number;
+  takenQuantity: number;
 }
 
 export interface IStore extends IStoreResponse {
@@ -28,4 +28,5 @@ export interface IState {
   cart: IProduct[];
   activeStoreProducts: IProduct[] | null;
   userOrderData: IOrderData;
+  totalPrice: number;
 }

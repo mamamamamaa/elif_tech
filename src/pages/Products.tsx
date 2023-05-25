@@ -53,7 +53,7 @@
 // }
 
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks.ts";
 import { getStoreProducts } from "../redux/operations/products.ts";
 import { selectActiveProducts, selectStores } from "../redux/selectors.ts";
@@ -69,14 +69,21 @@ export default function Products() {
   const stores = useAppSelector(selectStores);
   const activeProducts = useAppSelector(selectActiveProducts);
 
+  const [memStoreIs, setMemStoreId] = useState<string>();
+
+  const memorisedStoreId = useMemo(() => memStoreIs, [memStoreIs]);
+
   const handleAddToCard = (id: string) =>
     storeId && dispatch(setInCart({ product: id, store: storeId }));
 
   useEffect(() => {
     const isStore = Boolean(stores[0] && !stores[0].products);
+    const isNewStoreId =
+      memorisedStoreId && storeId && storeId !== memorisedStoreId;
 
-    if (storeId && isStore) {
+    if ((storeId && isStore) || isNewStoreId) {
       dispatch(getStoreProducts(storeId));
+      setMemStoreId(storeId);
     }
   }, [storeId, stores]);
 
