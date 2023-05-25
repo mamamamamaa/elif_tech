@@ -21,7 +21,7 @@ export const ProductCard: FC<Props> = ({
   const isAlreadyInCart = Boolean(cart.find(({ _id }) => id === _id));
 
   return (
-    <article className="flex flex-col justify-between bg-white rounded-lg shadow p-4 h-full">
+    <section className="flex flex-col justify-between bg-white rounded-lg shadow p-4 h-full">
       <img src={image || noImage} alt="Product" className="w-full" />
       <div>
         <h3 className="text-lg font-bold mt-2">{name}</h3>
@@ -35,6 +35,6 @@ export const ProductCard: FC<Props> = ({
         </button>
       </div>
       <button type="button"></button>
-    </article>
+    </section>
   );
 };

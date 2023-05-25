@@ -19,12 +19,12 @@ export const CartCard: FC<Props> = ({ price, image, quantity, name, id }) => {
   const handleRemoveFormCart = () => dispatch(removeFromCart(id));
 
   return (
-    <article className=" flex flex-row bg-white rounded-lg shadow p-4 relative">
+    <section className=" flex flex-row bg-white rounded-lg shadow p-4 relative">
       <img className="w-1/2" src={image || noImage} alt={name} />
       <div className="flex items-center justify-center gap-2 flex-col w-full">
         <h2 className="font-bold">{name}</h2>
         <p>Price: {price}</p>
-        <QuantityCounter quantity={quantity} />
+        <QuantityCounter quantity={quantity} productId={id} />
       </div>
       <button
         type="button"
@@ -33,6 +33,6 @@ export const CartCard: FC<Props> = ({ price, image, quantity, name, id }) => {
       >
         <RxCross2 />
       </button>
-    </article>
+    </section>
   );
 };

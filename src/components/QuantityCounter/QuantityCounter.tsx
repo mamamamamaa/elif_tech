@@ -1,10 +1,14 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { useAppDispatch } from "../../redux/hooks.ts";
+import { updateQuantity } from "../../redux/features/productsSlice.ts";
 
 interface Props {
   quantity: number;
+  productId: string;
 }
 
-export const QuantityCounter: FC<Props> = ({ quantity }) => {
+export const QuantityCounter: FC<Props> = ({ quantity, productId }) => {
+  const dispatch = useAppDispatch();
   const [count, setCount] = useState<number>(1);
 
   const handleIncrement = () => {
@@ -16,6 +20,10 @@ export const QuantityCounter: FC<Props> = ({ quantity }) => {
       setCount((prevCount) => prevCount - 1);
     }
   };
+
+  useEffect(() => {
+    dispatch(updateQuantity({ id: productId, totalQuantity: count }));
+  }, [count]);
 
   return (
     <div className="flex items-center">
