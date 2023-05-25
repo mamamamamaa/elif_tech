@@ -1,25 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IState, IStore } from "@/types/store.intarface";
+import { getShops } from "@/redux/operations/products";
 
-export interface CounterState {
-  value: string | null;
-}
-
-const initialState: CounterState = {
-  value: null,
+const initialState: IState = {
+  error: null,
+  isLoading: false,
+  store: [],
+  cart: [],
 };
 
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {
-    setHello(state, action: PayloadAction<string>) {
-      state.value = action.payload;
-    },
-  },
-
-  extraReducers: (builder) => builder,
+  reducers: {},
+  extraReducers: (builder) =>
+    builder
+      .addCase(getShops.pending, (state, action) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getShops.fulfilled, (state, action: PayloadAction<IStore[]>) => {
+        state.isLoading = false;
+        state.store = action.payload;
+      }),
 });
 
-export const { setHello } = productsSlice.actions;
+export const {} = productsSlice.actions;
 
 export default productsSlice.reducer;

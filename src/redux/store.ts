@@ -1,23 +1,66 @@
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { createWrapper } from "next-redux-wrapper";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import productsSlice from "@/redux/features/productsSlice";
+import productsReduces from "@/redux/features/productsSlice";
 
 export function makeStore() {
-  return configureStore({
-    reducer: { products: productsSlice },
-  });
+  const isServer = typeof window === "undefined";
+  if (isServer) {
+    return configureStore({
+      reducer: {
+        products: productsReduces,
+      },
+    });
+  } else {
+    const persistConfig = {
+      key: "nextjs",
+      whitelist: ["cart"],
+      storage,
+    };
+
+    const persistedReducer = persistReducer(persistConfig, productsReduces);
+
+    const store = configureStore({
+      reducer: {
+        products: persistedReducer,
+      },
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          immutableCheck: false,
+          serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          },
+        }),
+    });
+
+    // @ts-ignore
+    store.__persistor = persistStore(store);
+    //documentation hack --> https://github.com/kirill-konshin/next-redux-wrapper#usage-with-redux-persist
+
+    return store;
+  }
 }
 
-const store = makeStore();
+export const store = makeStore();
 
-export type AppState = ReturnType<typeof store.getState>;
-
+export type RootStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<RootStore["getState"]>;
 export type AppDispatch = typeof store.dispatch;
-
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
-  AppState,
+  RootState,
   unknown,
   Action<string>
 >;
 
-export default store;
+export const wrapper = createWrapper<RootStore>(makeStore);
