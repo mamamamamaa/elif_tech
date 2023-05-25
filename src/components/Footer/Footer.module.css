@@ -1,0 +1,11 @@
+.footer {
+    @apply bg-gray-900 text-white py-4;
+}
+
+.footerContainer {
+    @apply container mx-auto px-4;
+}
+
+.allRights {
+    @apply text-sm text-center;
+}
