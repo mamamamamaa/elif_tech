@@ -8,6 +8,9 @@ export const selectStores = (state: RootState) => state.products.stores;
 
 export const selectTotalPrice = (state: RootState) => state.products.totalPrice;
 
+export const selectOrderHistory = (state: RootState) =>
+  state.products.orderHistory;
+
 export const selectActiveProducts = (state: RootState) =>
   state.products.activeStoreProducts;
 
