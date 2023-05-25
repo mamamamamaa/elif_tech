@@ -1,3 +1,5 @@
+import { SpinnerLoader } from "../components/Spinner/Spinner.tsx";
+
 export default function Cart() {
-  return <>Welcome to the Cart page!</>;
+  return <SpinnerLoader />;
 }

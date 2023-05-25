@@ -39,9 +39,14 @@ export const productsSlice = createSlice({
       .addCase(
         getStoreProducts.fulfilled,
         (state, action: PayloadAction<IProduct[]>) => {
-          const { store: storeId } = action.payload[0];
-
           state.isLoading = false;
+
+          if (action.payload.length === 0) {
+            state.activeStoreProducts = null;
+            return;
+          }
+
+          const { store: storeId = null } = action.payload[0];
           state.stores = state.stores.map((store) => {
             if (store._id === storeId) {
               store.products = action.payload;
