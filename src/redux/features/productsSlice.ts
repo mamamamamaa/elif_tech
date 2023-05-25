@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IState } from "../../types/store.intarface";
-import { getStores } from "../operations/products";
+import { IProduct, IState } from "../../types/store.intarface";
+import { getStoreProducts, getStores } from "../operations/products";
 import { IStoreResponse } from "../../types/fetch.interface";
 
 const initialState: IState = {
@@ -8,6 +8,7 @@ const initialState: IState = {
   isLoading: false,
   stores: [],
   cart: [],
+  activeStoreProducts: null,
 };
 
 export const productsSlice = createSlice({
@@ -28,6 +29,30 @@ export const productsSlice = createSlice({
         }
       )
       .addCase(getStores.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getStoreProducts.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        getStoreProducts.fulfilled,
+        (state, action: PayloadAction<IProduct[]>) => {
+          const { store: storeId } = action.payload[0];
+
+          state.isLoading = false;
+          state.stores = state.stores.map((store) => {
+            if (store._id === storeId) {
+              store.products = action.payload;
+            }
+
+            return store;
+          });
+          state.activeStoreProducts = action.payload;
+        }
+      )
+      .addCase(getStoreProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       }),

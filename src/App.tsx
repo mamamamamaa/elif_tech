@@ -1,7 +1,7 @@
 import { FC, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout.tsx";
-import ProductPage from "./pages/Product.tsx";
+import ProductPage from "./pages/Products.tsx";
 
 const HomePage = lazy(() => import("./pages/Home.tsx"));
 const CartPage = lazy(() => import("./pages/Cart.tsx"));

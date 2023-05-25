@@ -18,4 +18,5 @@ export interface IState {
   isLoading: boolean;
   stores: IStore[];
   cart: IProduct[];
+  activeStoreProducts: IProduct[] | null;
 }
