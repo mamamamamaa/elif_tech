@@ -28,7 +28,12 @@ export const productsSlice = createSlice({
       );
 
       if (searchedProduct) {
-        state.cart.push(searchedProduct);
+        if (searchedProduct.store === state.cart[0].store) {
+          state.cart.push(searchedProduct);
+        } else {
+          state.error =
+            "You can only add products from one store to your shopping cart";
+        }
       } else {
         state.error = "Product not found";
       }
