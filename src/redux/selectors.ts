@@ -1,4 +1,4 @@
-import { RootState } from "@/redux/store";
+import { RootState } from "./store";
 
 export const selectIsLoading = (state: RootState) => state.products.isLoading;
 export const selectError = (state: RootState) => state.products.error;

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import style from "./Home.module.css";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
         We are a leading food delivery company, providing delicious meals right
         to your doorstep.
       </p>
-      <Link href="/shot" className={style.orderLink}>
+      <Link to="/store" className={style.orderLink}>
         Order Now
       </Link>
     </div>

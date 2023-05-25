@@ -1,4 +1,4 @@
-import { IStoreResponse } from "@/types/fetch.interface";
+import { IStoreResponse } from "./fetch.interface";
 
 export interface IProduct {
   _id: string;

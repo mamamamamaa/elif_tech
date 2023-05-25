@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IState } from "@/types/store.intarface";
-import { getStores } from "@/redux/operations/products";
-import { IStoreResponse } from "@/types/fetch.interface";
+import { IState } from "../../types/store.intarface";
+import { getStores } from "../operations/products";
+import { IStoreResponse } from "../../types/fetch.interface";
 
 const initialState: IState = {
   error: null,

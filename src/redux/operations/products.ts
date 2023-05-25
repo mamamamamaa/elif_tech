@@ -1,13 +1,12 @@
-import getConfig from "next/config";
 import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IStoreResponse } from "@/types/fetch.interface";
+import { IStoreResponse } from "../../types/fetch.interface";
 
-const { publicRuntimeConfig } = getConfig();
+const { VITE_SERVER } = import.meta.env;
 
-const { SERVER } = publicRuntimeConfig;
+console.log(VITE_SERVER);
 
-axios.defaults.baseURL = SERVER;
+axios.defaults.baseURL = VITE_SERVER;
 
 export const getStores = createAsyncThunk<
   IStoreResponse[],
