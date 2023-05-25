@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IState, IStore } from "@/types/store.intarface";
-import { getShops } from "@/redux/operations/products";
+import { IState } from "@/types/store.intarface";
+import { getStores } from "@/redux/operations/products";
+import { IStoreResponse } from "@/types/fetch.interface";
 
 const initialState: IState = {
   error: null,
@@ -15,13 +16,20 @@ export const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addCase(getShops.pending, (state, action) => {
+      .addCase(getStores.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(getShops.fulfilled, (state, action: PayloadAction<IStore[]>) => {
+      .addCase(
+        getStores.fulfilled,
+        (state, action: PayloadAction<IStoreResponse[]>) => {
+          state.isLoading = false;
+          state.store = action.payload;
+        }
+      )
+      .addCase(getStores.rejected, (state, action) => {
         state.isLoading = false;
-        state.store = action.payload;
+        state.error = action.payload;
       }),
 });
 

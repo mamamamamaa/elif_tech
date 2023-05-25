@@ -11,7 +11,7 @@ export const Header = () => {
           <span className={style.logoText}>ElifTech Delivery</span>
         </Link>
         <nav className={style.navigation}>
-          <Link href="/shop" className={style.navigationLink}>
+          <Link href="/store" className={style.navigationLink}>
             Shop
           </Link>
           <Link href="/cart" className={style.navigationLink}>

@@ -1,3 +1,5 @@
+import { IStoreResponse } from "@/types/fetch.interface";
+
 export interface IProduct {
   _id: string;
   name: string;
@@ -7,15 +9,12 @@ export interface IProduct {
   store: string;
 }
 
-export interface IStore {
-  _id: string;
-  name: string;
-  address: string;
-  products: IProduct[];
+export interface IStore extends IStoreResponse {
+  products?: IProduct[];
 }
 
 export interface IState {
-  error: string | null;
+  error: string | null | undefined;
   isLoading: boolean;
   store: IStore[];
   cart: IProduct[];
