@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { IOrderHistory } from "../../types/store.intarface.ts";
+import noImage from "../../../public/no_image.gif";
 
 interface Props {
   order: IOrderHistory;
@@ -24,7 +25,7 @@ export const OrderCard: FC<Props> = ({ order }) => {
           className="border flex flex-row border-gray-200 rounded p-2 mb-2"
         >
           <img
-            src={product.product.image}
+            src={product.product.image || noImage}
             alt={product.product.name}
             className="w-1/2 object-cover rounded"
           />

@@ -1,12 +1,12 @@
 import { FC, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout.tsx";
-import ProductPage from "./pages/Products.tsx";
+import ProductPage from "./pages/Products/Products.tsx";
 
-const HomePage = lazy(() => import("./pages/Home.tsx"));
-const CartPage = lazy(() => import("./pages/Cart.tsx"));
-const HistoryPage = lazy(() => import("./pages/History.tsx"));
-const StorePage = lazy(() => import("./pages/Store.tsx"));
+const HomePage = lazy(() => import("./pages/Home/Home.tsx"));
+const CartPage = lazy(() => import("./pages/Cart/Cart.tsx"));
+const HistoryPage = lazy(() => import("./pages/History/History.tsx"));
+const StorePage = lazy(() => import("./pages/Store/Store.tsx"));
 
 export const App: FC = () => {
   return (

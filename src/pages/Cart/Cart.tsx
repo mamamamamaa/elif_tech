@@ -1,9 +1,7 @@
-import { OrderForm } from "../components/OrderForm/OrderForm.tsx";
-import { CartList } from "../components/CartList/CartList.tsx";
+import { OrderForm } from "../../components/OrderForm/OrderForm.tsx";
+import { CartList } from "../../components/CartList/CartList.tsx";
 
 export default function Cart() {
-  // const cart = useAppSelector(selectCart);
-
   return (
     <>
       <div className="flex flex-col justify-center md:flex-row gap-10 w-full h-full">

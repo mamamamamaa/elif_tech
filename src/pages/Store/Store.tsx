@@ -1,8 +1,9 @@
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 import { useEffect } from "react";
-import { getStores } from "../redux/operations/products";
-import { selectStores } from "../redux/selectors";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { getStores } from "../../redux/operations/products.ts";
+import { selectStores } from "../../redux/selectors.ts";
+import { Outlet, useLocation } from "react-router-dom";
+import { StoresList } from "../../components/StoresList/StoresList.tsx";
 
 export default function Shop() {
   const location = useLocation();
@@ -19,21 +20,7 @@ export default function Shop() {
     <>
       <div className="flex flex-col justify-center md:flex-row gap-10 w-full md:max-h-[82vh] md:min-h-[82vh] h-full">
         <section className="md:w-1/4 h-40 md:h-auto overflow-y-scroll  border-2 rounded-xl py-7 px-5">
-          {stores.length > 0 && (
-            <div className="flex flex-col gap-3">
-              {stores.map(({ name, _id }) => {
-                return (
-                  <NavLink
-                    to={_id}
-                    className="border rounded-xl py-2 px-3 hover:bg-blue-500 hover:text-white overflow-hidden"
-                    key={_id}
-                  >
-                    {name}
-                  </NavLink>
-                );
-              })}
-            </div>
-          )}
+          {stores.length > 0 && <StoresList stores={stores} />}
         </section>
         <section className="md:w-3/4 border-2 rounded-xl py-7 px-5 overflow-y-scroll">
           <Outlet />
