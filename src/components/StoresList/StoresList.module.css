@@ -1,0 +1,12 @@
+
+.storeLinksContainer {
+    @apply flex flex-col gap-3;
+}
+
+.link {
+    @apply border rounded-xl py-2 px-3 hover:bg-blue-500 hover:text-white overflow-hidden;
+}
+
+.activeLink {
+    @apply border rounded-xl py-2 px-3 bg-blue-500 text-white overflow-hidden;
+}
