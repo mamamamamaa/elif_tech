@@ -1,0 +1,11 @@
+.pageWrapper {
+    @apply flex flex-col justify-center md:flex-row gap-10 w-full h-full;
+}
+
+.orderFormWrapper {
+    @apply md:w-2/4 md:h-auto border-2 rounded-xl py-7 px-5;
+}
+
+.orderListWrapper {
+    @apply md:w-2/4 border-2 rounded-xl py-7 px-5 overflow-y-scroll;
+}
