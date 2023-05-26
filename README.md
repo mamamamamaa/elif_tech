@@ -7,6 +7,8 @@ And the server side was based on Nest.js, MongoDB + Mongoose + the project was p
 
 The server was rendered and the client was netlify. You can visit the live page at this link --> https://storied-llama-bb013b.netlify.app/
 
+Server repo --> https://github.com/mamamamamaa/elif_tech_back
+
 ## Server
 To start the server, you need to follow these instructions:
 * Clone repo:
