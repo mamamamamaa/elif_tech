@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { IOrderHistory } from "../../types/store.intarface.ts";
 import noImage from "../../../public/no_image.gif";
+import style from "./OrderCard.module.css";
 
 interface Props {
   order: IOrderHistory;
@@ -8,29 +9,26 @@ interface Props {
 
 export const OrderCard: FC<Props> = ({ order }) => {
   return (
-    <div className="border border-gray-300 rounded p-4 shadow">
-      <h3 className="text-xl font-semibold mb-2">Order ID: {order._id}</h3>
-      <p className="mb-2">
+    <div className={style.cardWrapper}>
+      <h3 className={style.orderId}>Order ID: {order._id}</h3>
+      <p>
         Customer: {order.name} ({order.email})
       </p>
-      <p className="mb-2">Phone: {order.phone}</p>
-      <p className="mb-2">Store: {order.store.name}</p>
-      <p className="mb-2">Store Address: {order.store.address}</p>
-      <p className="mb-2">Delivery Address: {order.address}</p>
-      <p className="mb-2">Total Price: ${order.totalPrice}</p>
-      <h4 className="text-lg font-semibold mb-2">Products:</h4>
+      <p>Phone: {order.phone}</p>
+      <p>Store: {order.store.name}</p>
+      <p>Store Address: {order.store.address}</p>
+      <p>Delivery Address: {order.address}</p>
+      <p>Total Price: ${order.totalPrice}</p>
+      <h4 className={style.productsHeader}>Products:</h4>
       {order.products.map((product) => (
-        <div
-          key={product._id}
-          className="border flex flex-row border-gray-200 rounded p-2 mb-2"
-        >
+        <div key={product._id} className={style.productWrapper}>
           <img
             src={product.product.image || noImage}
             alt={product.product.name}
-            className="w-1/2 object-cover rounded"
+            className={style.productImage}
           />
-          <div className="w-1/2 flex flex-col gep-2 items-center justify-center">
-            <p className="text-lg font-semibold">{product.product.name}</p>
+          <div className={style.productInfoWrapper}>
+            <p className={style.productName}>{product.product.name}</p>
             <p>Price: ${product.product.price}</p>
             <p>Quantity: {product.product.quantity}</p>
             <p>Taken Quantity: {product.takenQuantity}</p>

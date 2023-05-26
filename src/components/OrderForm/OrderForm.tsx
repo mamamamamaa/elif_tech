@@ -5,12 +5,13 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 import { selectOrderData, selectTotalPrice } from "../../redux/selectors.ts";
 import { IOrderFormInputs } from "../../types/form.interface.ts";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import {
   checkTotalPrice,
   setUserOrderData,
 } from "../../redux/features/productsSlice.ts";
 import { makeOrder } from "../../redux/operations/products.ts";
+import * as yup from "yup";
+import style from "./OrderForm.module.css";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -73,26 +74,22 @@ export const OrderForm: FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {formInputs.map(({ name, defaultValue, label, placeholder }) => (
           <Fragment key={name}>
-            <label className="relative flex flex-col mb-4">
+            <label className={style.inputLabel}>
               {label}
-              <p className="absolute top-0 right-0 text-red-600">
-                {errors[name]?.message}
-              </p>
+              <p className={style.errorMessage}>{errors[name]?.message}</p>
               <input
                 required
                 placeholder={placeholder}
                 defaultValue={defaultValue}
-                className="border border-gray-300 px-3 py-2 rounded-md"
+                className={style.input}
                 {...register(name)}
               />
             </label>
           </Fragment>
         ))}
 
-        <div className="flex flex-row items-center gap-9">
-          <button className="w-1/2 rounded py-1 px-2 bg-blue-600 text-white text-sm border border-blue-600 hover:text-blue-600 hover:bg-transparent disabled:bg-transparent disabled:text-blue-600">
-            Submit
-          </button>
+        <div className={style.submitWrapper}>
+          <button className={style.submitBtn}>Submit</button>
           <span> TOTAL PRICE: {totalPrice}</span>
         </div>
       </form>
