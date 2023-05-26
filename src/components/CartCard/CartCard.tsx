@@ -4,6 +4,7 @@ import { QuantityCounter } from "../QuantityCounter/QuantityCounter.tsx";
 import { RxCross2 } from "react-icons/rx";
 import { useAppDispatch } from "../../redux/hooks.ts";
 import { removeFromCart } from "../../redux/features/productsSlice.ts";
+import style from "./CartCard.module.css";
 
 interface Props {
   id: string;
@@ -19,17 +20,17 @@ export const CartCard: FC<Props> = ({ price, image, quantity, name, id }) => {
   const handleRemoveFormCart = () => dispatch(removeFromCart(id));
 
   return (
-    <section className=" flex flex-row bg-white rounded-lg shadow p-4 relative">
-      <img className="w-1/2" src={image || noImage} alt={name} />
-      <div className="flex items-center justify-center gap-2 flex-col w-full">
-        <h2 className="font-bold">{name}</h2>
+    <section className={style.cardWrapper}>
+      <img className={style.img} src={image || noImage} alt={name} />
+      <div className={style.productInfoWrapper}>
+        <h2 className={style.productName}>{name}</h2>
         <p>Price: {price}</p>
         <QuantityCounter quantity={quantity} productId={id} />
       </div>
       <button
         type="button"
         onClick={handleRemoveFormCart}
-        className="absolute top-3 right-3"
+        className={style.removeBtn}
       >
         <RxCross2 />
       </button>

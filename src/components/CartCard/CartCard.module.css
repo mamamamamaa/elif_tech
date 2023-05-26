@@ -1,0 +1,19 @@
+.cardWrapper {
+     @apply flex flex-row bg-white rounded-lg shadow p-4 relative;
+}
+
+.img {
+      @apply w-1/2
+}
+
+.productInfoWrapper {
+      @apply flex items-center justify-center gap-2 flex-col w-full;
+}
+
+.productName {
+     @apply font-bold;
+}
+
+.removeBtn {
+      @apply absolute top-3 right-3;
+}
