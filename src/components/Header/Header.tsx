@@ -1,6 +1,6 @@
 import logo from "../../../public/elif_tech_logo.jpg";
 import style from "./Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const navLinks = [
   {
@@ -27,9 +27,15 @@ export const Header = () => {
         </Link>
         <nav className={style.navigation}>
           {navLinks.map(({ linkTo, pageName }) => (
-            <Link to={linkTo} key={pageName} className={style.navigationLink}>
+            <NavLink
+              to={linkTo}
+              key={pageName}
+              className={({ isActive }) =>
+                isActive ? style.activeNavigationLink : style.navigationLink
+              }
+            >
               {pageName}
-            </Link>
+            </NavLink>
           ))}
         </nav>
       </div>
