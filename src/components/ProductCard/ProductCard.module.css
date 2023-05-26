@@ -1,0 +1,15 @@
+.cardWrapper {
+     @apply flex flex-col justify-between bg-white rounded-lg shadow p-4 h-full;
+}
+
+.img {
+    @apply w-full;
+}
+
+.productName {
+    @apply text-lg font-bold mt-2;
+}
+
+.orderButton {
+    @apply h-7 w-full rounded py-1 px-2 text-white text-sm border border-blue-600 hover:text-blue-600 hover:bg-transparent disabled:bg-transparent disabled:text-blue-600;
+}
