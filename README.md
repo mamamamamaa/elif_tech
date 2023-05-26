@@ -5,7 +5,7 @@ On the client side, technologies such as TypeScript, React, Redux-toolkit, Redux
 
 And the server side was based on Nest.js, MongoDB + Mongoose + the project was placed in a docker container and the instructions were described in the Мakefile.
 
-
+The server was rendered and the client was netlify. You can visit the live page at this link --> https://storied-llama-bb013b.netlify.app/
 
 ## Server
 To start the server, you need to follow these instructions:
