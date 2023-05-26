@@ -1,32 +1,33 @@
 import { useLocation } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 import { getStoreProducts } from "../../redux/operations/products.ts";
-import { selectActiveProducts, selectStores } from "../../redux/selectors.ts";
+import {
+  selectActiveProducts,
+  selectCurrentStore,
+  selectStores,
+} from "../../redux/selectors.ts";
 import { ProductsList } from "../../components/ProductsList/ProductsList.tsx";
 import style from "./Products.module.css";
+import { setCurrentStore } from "../../redux/features/productsSlice.ts";
 
 export default function Products() {
-  const [memStoreIs, setMemStoreId] = useState<string>();
-  const memorisedStoreId = useMemo(() => memStoreIs, [memStoreIs]);
-
   const location = useLocation();
   const storeId = location.pathname.split("/").pop();
 
   const dispatch = useAppDispatch();
   const stores = useAppSelector(selectStores);
   const activeProducts = useAppSelector(selectActiveProducts);
+  const currentStore = useAppSelector(selectCurrentStore);
 
   useEffect(() => {
     const isStore = Boolean(stores[0] && !stores[0].products);
-    const isNewStoreId =
-      memorisedStoreId && storeId && storeId !== memorisedStoreId;
 
-    if ((storeId && isStore) || isNewStoreId) {
+    if (((storeId && isStore) || currentStore !== storeId) && storeId) {
       dispatch(getStoreProducts(storeId));
-      setMemStoreId(storeId);
+      dispatch(setCurrentStore(storeId));
     }
-  }, [storeId, stores]);
+  }, [storeId]);
 
   return (
     <>

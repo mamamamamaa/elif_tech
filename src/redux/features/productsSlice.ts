@@ -22,6 +22,7 @@ const initialState: IState = {
   userOrderData: { name: "", address: "", email: "", phone: "" },
   totalPrice: 0,
   orderHistory: [],
+  currentStore: null,
 };
 
 const extraActions = [getOrderHistory, getStoreProducts, getStores, makeOrder];
@@ -30,6 +31,9 @@ export const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    setCurrentStore(store, action: PayloadAction<string>) {
+      store.currentStore = action.payload;
+    },
     setInCart(
       state,
       action: PayloadAction<{ store: string; product: string }>
@@ -96,7 +100,6 @@ export const productsSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-
       .addCase(
         getStores.fulfilled,
         (state, action: PayloadAction<IStoreResponse[]>) => {
@@ -147,7 +150,7 @@ export const productsSlice = createSlice({
       .addMatcher(
         isAnyOf(...extraActions.map((action) => action.rejected)),
         (state, action) => {
-          state.isLoading = true;
+          state.isLoading = false;
           state.error = action.payload;
         }
       ),
@@ -159,6 +162,7 @@ export const {
   removeFromCart,
   updateQuantity,
   checkTotalPrice,
+  setCurrentStore,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

@@ -7,6 +7,7 @@ const HomePage = lazy(() => import("./pages/Home/Home.tsx"));
 const CartPage = lazy(() => import("./pages/Cart/Cart.tsx"));
 const HistoryPage = lazy(() => import("./pages/History/History.tsx"));
 const StorePage = lazy(() => import("./pages/Store/Store.tsx"));
+const NotFoundPage = lazy(() => import("./pages/NotFound/NotFound.tsx"));
 
 export const App: FC = () => {
   return (
@@ -18,7 +19,7 @@ export const App: FC = () => {
         <Route path="/store" element={<StorePage />}>
           <Route path=":id" element={<ProductPage />} />
         </Route>
-        {/*<Route path="*" element={<NotFound />} />*/}
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

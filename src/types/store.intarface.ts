@@ -62,4 +62,5 @@ export interface IState {
   userOrderData: IOrderData;
   totalPrice: number;
   orderHistory: IOrderHistory[];
+  currentStore: string | null;
 }
