@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks.ts";
 import { updateQuantity } from "../../redux/features/productsSlice.ts";
+import style from "./QuantityCounter.module.css";
 
 interface Props {
   quantity: number;
@@ -26,18 +27,12 @@ export const QuantityCounter: FC<Props> = ({ quantity, productId }) => {
   }, [count]);
 
   return (
-    <div className="flex items-center">
-      <button
-        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-l"
-        onClick={handleDecrement}
-      >
+    <div className={style.counterWrapper}>
+      <button className={style.decrementBrn} onClick={handleDecrement}>
         -
       </button>
-      <span className="bg-gray-100 px-3 py-2">{count}</span>
-      <button
-        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-r"
-        onClick={handleIncrement}
-      >
+      <span className={style.count}>{count}</span>
+      <button className={style.incrementBtn} onClick={handleIncrement}>
         +
       </button>
     </div>
