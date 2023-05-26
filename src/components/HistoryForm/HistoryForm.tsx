@@ -7,6 +7,7 @@ import { IOrderHistoryFormInputs } from "../../types/form.interface.ts";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 import { selectOrderData } from "../../redux/selectors.ts";
 import { getOrderHistory } from "../../redux/operations/products.ts";
+import style from "./HistoryForm.module.css";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -51,25 +52,21 @@ export const HistoryForm: FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {formInputs.map(({ name, defaultValue, label, placeholder }) => (
           <Fragment key={name}>
-            <label className="relative flex flex-col mb-4">
+            <label className={style.inputLabel}>
               {label}
-              <p className="absolute top-0 right-0 text-red-600">
-                {errors[name]?.message}
-              </p>
+              <p className={style.errorMessage}>{errors[name]?.message}</p>
               <input
                 required
                 placeholder={placeholder}
                 defaultValue={defaultValue}
-                className="border border-gray-300 px-3 py-2 rounded-md"
+                className={style.input}
                 {...register(name)}
               />
             </label>
           </Fragment>
         ))}
 
-        <button className="w-full rounded py-1 px-2 bg-blue-600 text-white text-sm border border-blue-600 hover:text-blue-600 hover:bg-transparent disabled:bg-transparent disabled:text-blue-600">
-          Submit
-        </button>
+        <button className={style.submitBtn}>Submit</button>
       </form>
     </>
   );
