@@ -1,0 +1,11 @@
+.pageWrapper {
+    @apply flex flex-col justify-center gap-10 w-full;
+}
+
+.historyFormWrapper {
+    @apply border-2 rounded-xl py-7 px-5;
+}
+
+.historyListWrapper {
+    @apply border-2 rounded-xl py-7 px-5 overflow-y-scroll;
+}
