@@ -27,7 +27,7 @@ export default function Shop() {
         <section className={store.productsListWrapper}>
           <Outlet />
           {location.pathname === "/store" && (
-            <p className={store.noProductsTexts}>Choose a store!</p>
+            <p className={store.noSelectedStoreTexts}>Choose a store!</p>
           )}
         </section>
       </div>

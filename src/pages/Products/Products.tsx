@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks.ts";
 import { getStoreProducts } from "../../redux/operations/products.ts";
 import { selectActiveProducts, selectStores } from "../../redux/selectors.ts";
 import { ProductsList } from "../../components/ProductsList/ProductsList.tsx";
+import style from "./Products.module.css";
 
 export default function Products() {
   const [memStoreIs, setMemStoreId] = useState<string>();
@@ -33,7 +34,7 @@ export default function Products() {
         <ProductsList activeProducts={activeProducts} storeId={storeId} />
       )}
       {!activeProducts && (
-        <p className="text-center">This store has no products</p>
+        <p className={style.noProductsTexts}>This store has no products</p>
       )}
     </>
   );

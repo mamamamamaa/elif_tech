@@ -10,6 +10,6 @@
     @apply md:w-3/4 border-2 rounded-xl py-7 px-5 overflow-y-scroll;
 }
 
-.noProductsTexts {
+.noSelectedStoreTexts {
     @apply text-center;
 }
