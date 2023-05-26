@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import {
   IOrderData,
   IOrderHistory,
@@ -23,6 +23,8 @@ const initialState: IState = {
   totalPrice: 0,
   orderHistory: [],
 };
+
+const extraActions = [getOrderHistory, getStoreProducts, getStores, makeOrder];
 
 export const productsSlice = createSlice({
   name: "products",
@@ -94,10 +96,7 @@ export const productsSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(getStores.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+
       .addCase(
         getStores.fulfilled,
         (state, action: PayloadAction<IStoreResponse[]>) => {
@@ -105,14 +104,6 @@ export const productsSlice = createSlice({
           state.stores = action.payload;
         }
       )
-      .addCase(getStores.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(getStoreProducts.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
       .addCase(
         getStoreProducts.fulfilled,
         (state, action: PayloadAction<IProduct[]>) => {
@@ -134,26 +125,10 @@ export const productsSlice = createSlice({
           state.activeStoreProducts = action.payload;
         }
       )
-      .addCase(getStoreProducts.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(makeOrder.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
       .addCase(makeOrder.fulfilled, (state) => {
         state.totalPrice = 0;
         state.cart = [];
         state.isLoading = false;
-      })
-      .addCase(makeOrder.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(getOrderHistory.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
       })
       .addCase(
         getOrderHistory.fulfilled,
@@ -162,10 +137,20 @@ export const productsSlice = createSlice({
           state.orderHistory = action.payload;
         }
       )
-      .addCase(getOrderHistory.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      }),
+      .addMatcher(
+        isAnyOf(...extraActions.map((action) => action.pending)),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        isAnyOf(...extraActions.map((action) => action.rejected)),
+        (state, action) => {
+          state.isLoading = true;
+          state.error = action.payload;
+        }
+      ),
 });
 
 export const {
@@ -177,3 +162,78 @@ export const {
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
+
+// extraReducers: (builder) =>
+//     builder
+//         .addCase(getStores.pending, (state) => {
+//             state.isLoading = true;
+//             state.error = null;
+//         })
+//         .addCase(
+//             getStores.fulfilled,
+//             (state, action: PayloadAction<IStoreResponse[]>) => {
+//                 state.isLoading = false;
+//                 state.stores = action.payload;
+//             }
+//         )
+//         .addCase(getStores.rejected, (state, action) => {
+//             state.isLoading = false;
+//             state.error = action.payload;
+//         })
+//         .addCase(getStoreProducts.pending, (state) => {
+//             state.isLoading = true;
+//             state.error = null;
+//         })
+//         .addCase(
+//             getStoreProducts.fulfilled,
+//             (state, action: PayloadAction<IProduct[]>) => {
+//                 state.isLoading = false;
+//
+//                 if (action.payload.length === 0) {
+//                     state.activeStoreProducts = null;
+//                     return;
+//                 }
+//
+//                 const { store: storeId = null } = action.payload[0];
+//                 state.stores = state.stores.map((store) => {
+//                     if (store._id === storeId) {
+//                         store.products = action.payload;
+//                     }
+//
+//                     return store;
+//                 });
+//                 state.activeStoreProducts = action.payload;
+//             }
+//         )
+//         .addCase(getStoreProducts.rejected, (state, action) => {
+//             state.isLoading = false;
+//             state.error = action.payload;
+//         })
+//         .addCase(makeOrder.pending, (state) => {
+//             state.isLoading = true;
+//             state.error = null;
+//         })
+//         .addCase(makeOrder.fulfilled, (state) => {
+//             state.totalPrice = 0;
+//             state.cart = [];
+//             state.isLoading = false;
+//         })
+//         .addCase(makeOrder.rejected, (state, action) => {
+//             state.isLoading = false;
+//             state.error = action.payload;
+//         })
+//         .addCase(getOrderHistory.pending, (state) => {
+//             state.isLoading = true;
+//             state.error = null;
+//         })
+//         .addCase(
+//             getOrderHistory.fulfilled,
+//             (state, action: PayloadAction<IOrderHistory[]>) => {
+//                 state.isLoading = false;
+//                 state.orderHistory = action.payload;
+//             }
+//         )
+//         .addCase(getOrderHistory.rejected, (state, action) => {
+//             state.isLoading = false;
+//             state.error = action.payload;
+//         })
