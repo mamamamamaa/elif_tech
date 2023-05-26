@@ -5,6 +5,8 @@ import { selectStores } from "../../redux/selectors.ts";
 import { Outlet, useLocation } from "react-router-dom";
 import { StoresList } from "../../components/StoresList/StoresList.tsx";
 
+import store from "./Store.module.css";
+
 export default function Shop() {
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -18,14 +20,14 @@ export default function Shop() {
 
   return (
     <>
-      <div className="flex flex-col justify-center md:flex-row gap-10 w-full md:max-h-[82vh] md:min-h-[82vh] h-full">
-        <section className="md:w-1/4 h-40 md:h-auto overflow-y-scroll  border-2 rounded-xl py-7 px-5">
+      <div className={store.pageWrapper}>
+        <section className={store.storesListWrapper}>
           {stores.length > 0 && <StoresList stores={stores} />}
         </section>
-        <section className="md:w-3/4 border-2 rounded-xl py-7 px-5 overflow-y-scroll">
+        <section className={store.productsListWrapper}>
           <Outlet />
           {location.pathname === "/store" && (
-            <p className="text-center">Choose a store!</p>
+            <p className={store.noProductsTexts}>Choose a store!</p>
           )}
         </section>
       </div>

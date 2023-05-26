@@ -1,0 +1,15 @@
+.pageWrapper {
+    @apply flex flex-col justify-center md:flex-row gap-10 w-full md:max-h-[82vh] md:min-h-[82vh] h-full;
+}
+
+.storesListWrapper {
+    @apply md:w-1/4 h-40 md:h-auto overflow-y-scroll  border-2 rounded-xl py-7 px-5;
+}
+
+.productsListWrapper {
+    @apply md:w-3/4 border-2 rounded-xl py-7 px-5 overflow-y-scroll;
+}
+
+.noProductsTexts {
+    @apply text-center;
+}
